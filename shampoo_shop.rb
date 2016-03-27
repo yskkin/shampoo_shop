@@ -24,8 +24,8 @@ class ProductPage
 
   %w(洗浄力 素材 安全性 コスパ 環境 補修力 ツヤ 感触 育毛 洗浄剤).each_with_index do |sym, i|
     color = sym + 'の色'
-    color_xpath = "xpath=//progress[#{i + 1}]/@class"
-    xpath = "xpath=//progress[#{i + 1}]/@value"
+    color_xpath = "xpath=(//progress)[#{i + 1}]/@class"
+    xpath = "xpath=(//progress)[#{i + 1}]/@value"
 
     send sym, xpath
     send color.to_sym, color_xpath do |text|
