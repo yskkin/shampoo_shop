@@ -1,12 +1,25 @@
 # -*- coding: utf-8 -*-
 
+require 'csv'
 require 'wombat'
+
+class ShampooList
+  include Wombat::Crawler
+
+  base_url 'http://www.ishampoo.jp/'
+  path '/list/productListS'
+
+  product_link 'xpath=//table//tr/td[3]/a/@href', :list do |hrefs|
+    hrefs.map do |href|
+      href.gsub('../', '')
+    end
+  end
+end
 
 class ProductPage
   include Wombat::Crawler
 
   base_url 'http://www.ishampoo.jp/'
-  path '/products/3145'
 
   製品名 css: '.row .container h2'
   メーカ css: '.row .container small'
@@ -49,4 +62,10 @@ class ProductPage
   end
 end
 
-p ProductPage.new.crawl
+ShampooList.new.crawl['product_link'].map do |path|
+  a = ProductPage.new
+  a.path path
+  data = a.crawl
+  $csv ||= CSV.open 'shampoo.csv', 'wb', headers: data.keys, write_headers: true
+  $csv << data.values
+end
