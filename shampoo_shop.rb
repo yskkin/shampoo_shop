@@ -51,7 +51,7 @@ class ProductPage
   洗浄剤数 xpath: '//table//tr[2]/td[2]'
   エキス系 xpath: '//table//tr[2]/td[3]'
   特効 xpath: '//table//tr[2]/td[4]'
-  ダメ xpath: '//table/tr[2]/td[5]'
+  ダメ xpath: '//table//tr[2]/td[5]'
 
   コメント css: '.kaisekitext'
   全成分 xpath: '//div[contains(text(), "【全成分】")]' do |text|
